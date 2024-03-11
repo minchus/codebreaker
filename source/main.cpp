@@ -1,32 +1,22 @@
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <string>
 
 #include "cracker.hpp"
 
-int main()
-{
-	std::string cipher_text =
-		"DSDRO XFIJV DIYSB ANQAL TAIMX VBDMB GASSA QRTRT CGGXJ MMTQC IPJSB AQPDR SDIMS DUAMB CQCMS AQDRS"
-		"DMRJN SBAGC IYTCY ASBCS MQXKS CICGX RSRCQ ACOGA SJPAS AQHDI ASBAK GCDIS AWSJN CMDKB AQHAR RCYAE";
+int main() {
+  Cracker c(R"(C:\Users\Ming\code\codebreaker\tetragraphs.csv)");
+  c.SetCipherText(
+      "DSDRO XFIJV DIYSB ANQAL TAIMX VBDMB GASSA QRTRT CGGXJ MMTQC IPJSB AQPDR "
+      "SDIMS DUAMB CQCMS AQDRS"
+      "DMRJN SBAGC IYTCY ASBCS MQXKS CICGX RSRCQ ACOGA SJPAS AQHDI ASBAK GCDIS "
+      "AWSJN CMDKB AQHAR RCYAE");
 
-	CodeBreaker c(R"(C:\Users\Ming\code\codebreaker\tetragraphs.csv)");
-	c.SetCipherText(cipher_text);
-	c.SetKey("COMPANYBDEFGHIJKLQRSTUVWXZ");
-	c.InvertKey();
+  c.Crack();
 
-	c.Decrypt();
+  // std::cout << "best_plain_text=" << c.GetBestPlainText() << std::endl;
+  // std::cout << "best_key=" << c.GetBestKey() << std::endl;
+  // std::cout << "best_score=" << c.GetBestScore() << std::endl;
 
-	std::string plain_text = c.GetPlainText();
-	std::cout << plain_text << std::endl;
-
-	double score = c.CalculateScore();
-	std::cout <<std::fixed << std::setprecision(0) << "score=" << score << std::endl;
-
-	c.InvertKey();
-	std::string key = c.GetKey();
-	std::cout << key << std::endl;
-
-
-	return 0;
+  return 0;
 }
